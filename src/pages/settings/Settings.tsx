@@ -263,25 +263,8 @@ export default observer(() => {
             category="pages"
             custom={
                 <>
-                    <ButtonItem
-                        compact
-                        onClick={() =>
-                            modalController.push({ type: "changelog" })
-                        }>
-                        <ListUl size={20} />
-                        <Text id="app.special.modals.changelogs.title" />
-                    </ButtonItem>
                     <a
-                        href="https://github.com/revoltchat"
-                        target="_blank"
-                        rel="noreferrer">
-                        <ButtonItem compact>
-                            <Github size={20} />
-                            <Text id="app.settings.pages.source_code" />
-                        </ButtonItem>
-                    </a>
-                    <a
-                        href="https://insrt.uk/donate"
+                        href="https://patreon.com/sincrogame"
                         target="_blank"
                         rel="noreferrer">
                         <ButtonItem className={styles.donate} compact>
@@ -299,23 +282,7 @@ export default observer(() => {
                     </ButtonItem>
                     <div className={styles.version}>
                         <span className={styles.revision}>
-                            <a
-                                href={`${REPO_URL}/${GIT_REVISION}`}
-                                target="_blank"
-                                rel="noreferrer">
-                                {GIT_REVISION.substr(0, 7)}
-                            </a>
                             {` `}
-                            <a
-                                href={
-                                    GIT_BRANCH !== "DETACHED"
-                                        ? `https://github.com/revoltchat/revite/tree/${GIT_BRANCH}`
-                                        : undefined
-                                }
-                                target="_blank"
-                                rel="noreferrer">
-                                ({GIT_BRANCH})
-                            </a>
                         </span>
                         <span>
                             {GIT_BRANCH === "production" ? "Stable" : "Nightly"}{" "}

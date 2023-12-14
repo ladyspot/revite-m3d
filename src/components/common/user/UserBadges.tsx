@@ -119,7 +119,7 @@ export default function UserBadges({ badges, uid }: Props) {
                             }}
                             onClick={() => {
                                 window.open(
-                                    "https://insrt.uk/donate",
+                                    "https://patreon.com/sincrogame",
                                     "_blank",
                                 );
                             }}

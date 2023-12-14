@@ -175,7 +175,7 @@ export default observer(() => {
                                 </CategoryButton>
                             </Link>
                             <a
-                                href="https://insrt.uk/donate"
+                                href="https://patreon.com/sincrogame"
                                 target="_blank"
                                 rel="noreferrer">
                                 <CategoryButton
