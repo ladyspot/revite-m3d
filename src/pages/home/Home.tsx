@@ -168,9 +168,8 @@ export default observer(() => {
                                 rel="noreferrer">
                                 <CategoryButton
                                     action="external"
-                                    description="Donate to Match3D"}
+                                    description="Donate to Match3D.">
                                     icon={<Money size={32} />}>
-                                    <Text id="app.home.donate" />
                                 </CategoryButton>
                             </a>
                             <Link to="/settings">
