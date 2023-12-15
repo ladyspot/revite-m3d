@@ -125,18 +125,6 @@ export default observer(() => {
                                     <Text id="app.home.group" />
                                 </CategoryButton>
                             </a>
-                            <Link to="/discover">
-                                <a>
-                                    <CategoryButton
-                                        action="chevron"
-                                        icon={<Compass size={32} />}
-                                        description={
-                                            <Text id="app.home.discover_desc" />
-                                        }>
-                                        <Text id="app.home.discover" />
-                                    </CategoryButton>
-                                </a>
-                            </Link>
 
                             {client.servers.get(
                                 "01F7ZSBSFHQ8TA81725KQCSDDP",
@@ -152,7 +140,7 @@ export default observer(() => {
                                     </CategoryButton>
                                 </Link>
                             ) : (
-                                <Link to="/invite/Testers">
+                                <Link to="/invite/HCn73bae">
                                     <CategoryButton
                                         action="chevron"
                                         icon={<Group size={32} />}
@@ -180,9 +168,7 @@ export default observer(() => {
                                 rel="noreferrer">
                                 <CategoryButton
                                     action="external"
-                                    description={
-                                        <Text id="app.home.donate_desc" />
-                                    }
+                                    description="Donate to Match3D"}
                                     icon={<Money size={32} />}>
                                     <Text id="app.home.donate" />
                                 </CategoryButton>
