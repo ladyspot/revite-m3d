@@ -257,9 +257,9 @@ export const Form = observer(({ page, callback }: Props) => {
                             <br />
                             <Tip palette="primary">
                                 <span>
-                                    <Text id="login.unofficial_instance" />{" "}
+                                    Welcome to Match3D! 💞
                                     <a
-                                        href="https://developers.revolt.chat/faq/instances#what-is-a-third-party-instance"
+                                        href="https://panel.match3d.space"
                                         style={{ color: "var(--accent)" }}
                                         target="_blank"
                                         rel="noreferrer">

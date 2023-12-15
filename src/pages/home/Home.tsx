@@ -169,7 +169,7 @@ export default observer(() => {
                                 <CategoryButton
                                     action="external"
                                     description="Donate to Match3D.">
-                                    icon={<Money size={32} />}
+                                    {<Money size={32} />}
                                 </CategoryButton>
                             </a>
                             <Link to="/settings">
