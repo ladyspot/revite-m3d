@@ -11,12 +11,12 @@ export function Feedback() {
     return (
         <Column>
             <div className={styles.feedback}>
-                <Link to="/invite/qK7jtgzM">
+                <Link to="/invite/HCn73bae">
                     <a>
                         <CategoryButton
                             action="chevron"
                             icon={<Group size={24} />}
-                            description="You can report issues and discuss improvements with us directly here.">
+                            description="You can talk with the community and report issues here, official guild.">
                             {"Join the Match3D Lounge"}
                         </CategoryButton>
                     </a>
