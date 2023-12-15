@@ -150,10 +150,14 @@ export default function UserBadges({ badges, uid }: Props) {
                     <></>
                 )}
                 {uid === "01HHQTKBD84DKZFJBZFVX5C5TQ" ? (
-                    <Tooltip content="Match3D Founder">
+                    <Tooltip
+                        content={
+                            <Text id="app.special.popovers.user_profile.badges.founder" />
+                        }
+                    >
                         <img src="/assets/badges/founder.svg" />
                     </Tooltip>
-                ) : (
+                ) : null}
                 {uid === "01EX2NCWQ0CHS3QJF0FEQS1GR4" ? (
                     <Tooltip content="🦝">
                         <img src="/assets/badges/raccoon.svg" />
