@@ -62,7 +62,7 @@ export default observer(() => {
                     <div className={styles.nav}>
                         <a className={styles.logo}>
                             {!("native" in window) && (
-                                <img src="wide.png" draggable={false} />
+                                <img src="wide.svg" draggable={false} />
                             )}
                         </a>
                         <LocaleSelector />
