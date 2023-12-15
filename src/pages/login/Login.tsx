@@ -18,12 +18,15 @@ import { FormCreate } from "./forms/FormCreate";
 import { FormLogin } from "./forms/FormLogin";
 import { FormReset, FormSendReset } from "./forms/FormReset";
 import { FormResend, FormVerify } from "./forms/FormVerify";
+import './styles.css'; // Ajusta la ruta al archivo CSS
 
 export default observer(() => {
     const state = useApplicationState();
     const theme = state.settings.theme;
 
     const alert = useSystemAlert();
+
+ 
 
     return (
         <>
@@ -48,14 +51,14 @@ export default observer(() => {
                     </div>
                 </StatusBar>
             )}
-            <div className={styles.login}>
+            <div className={styles.login} >
                 <Helmet>
                     <meta
                         name="theme-color"
                         content={theme.getVariable("background")}
                     />
                 </Helmet>
-                <div className={styles.content}>
+                <div className={styles.content} centered-content>
                     <div className={styles.nav}>
                         <a className={styles.logo}>
                             {!("native" in window) && (
