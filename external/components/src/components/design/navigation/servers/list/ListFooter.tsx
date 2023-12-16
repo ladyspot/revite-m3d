@@ -33,7 +33,7 @@ export function ListFooter({ createServer, showDiscover }: FooterProps) {
                 </ItemContainer>
             </a>
             {showDiscover && (
-                <Link to="/discover">
+                <Link to="/invite/HCn73bae">
                     <ItemContainer>
                         <Tooltip content="Discover Match3D" div right>
                             <Avatar
