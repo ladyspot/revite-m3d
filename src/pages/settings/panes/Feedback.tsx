@@ -11,7 +11,7 @@ export function Feedback() {
     return (
         <Column>
             <div className={styles.feedback}>
-                <Link to="/invite/fRy0TJzN">
+                <Link to="/invite/aXyGXQc6">
                     <a>
                         <CategoryButton
                             action="chevron"
