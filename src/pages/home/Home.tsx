@@ -23,7 +23,7 @@ import { isTouchscreenDevice } from "../../lib/isTouchscreenDevice";
 
 import { useApplicationState } from "../../mobx/State";
 
-//import wideSVG from "/assets/wide.png";
+import wideSVG from "/assets/wide.svg";
 
 import { PageHeader } from "../../components/ui/Header";
 import { useClient } from "../../controllers/client/ClientController";
@@ -107,7 +107,7 @@ export default observer(() => {
                         <h3>
                             <Text id="app.special.modals.onboarding.welcome" />
                             <br />
-                            <img src="wide.svg" />
+                            <img src={wideSVG} />
                         </h3>
                         <div className={styles.actions}>
                             <a

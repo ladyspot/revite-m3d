@@ -8,7 +8,7 @@ import { Text } from "preact-i18n";
 
 import { useApplicationState } from "../../mobx/State";
 
-//import wideSVG from "/assets/wide.png";
+import wideSVG from "/assets/wide.svg";
 
 import LocaleSelector from "../../components/common/LocaleSelector";
 import { Titlebar } from "../../components/native/Titlebar";
@@ -62,7 +62,7 @@ export default observer(() => {
                     <div className={styles.nav}>
                         <a className={styles.logo}>
                             {!("native" in window) && (
-                                <img src="wide.svg" draggable={false} />
+                                <img src={wideSVG} draggable={false} />
                             )}
                         </a>
                         <LocaleSelector />
