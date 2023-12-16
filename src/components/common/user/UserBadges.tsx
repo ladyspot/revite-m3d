@@ -149,7 +149,7 @@ export default function UserBadges({ badges, uid }: Props) {
                 ) : (
                     <></>
                 )}
-                {uid === "01HHS9BFMNXEV3P1E351VFR999" ? (
+                {uid === "01HHSRJNB6JW0E0HYESGWDSAFW" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.founder" />
