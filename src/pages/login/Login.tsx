@@ -61,7 +61,7 @@ export default observer(() => {
                 <div className={styles.content} centered-content>
                     <div className={styles.nav}>
                         <a className={styles.logo}>
-                            <strong>Match3D</strong>  // Texto en negrita siempre visible
+                            <strong>Match3D</strong> - Adult Social
                         </a>
                         <LocaleSelector />
                     </div>

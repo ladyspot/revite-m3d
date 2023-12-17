@@ -107,7 +107,7 @@ export default observer(() => {
                         <h3>
                             <Text id="app.special.modals.onboarding.welcome" />
                             <br />
-                            <img src={wideSVG} />
+                            <strong>Match3D</strong> - Adult Social
                         </h3>
                         <div className={styles.actions}>
                             <a
