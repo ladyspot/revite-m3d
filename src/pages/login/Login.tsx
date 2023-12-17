@@ -26,7 +26,7 @@ export default observer(() => {
 
     const alert = useSystemAlert();
 
- 
+
 
     return (
         <>
@@ -39,7 +39,7 @@ export default observer(() => {
                     <div className="actions">
                         {alert.actions?.map((action) =>
                             action.type === "internal" ? null : action.type ===
-                              "external" ? (
+                                "external" ? (
                                 <a
                                     href={action.href}
                                     target="_blank"
@@ -58,54 +58,53 @@ export default observer(() => {
                         content={theme.getVariable("background")}
                     />
                 </Helmet>
-                <div className={styles.content} centered-content>
-                    <div className={styles.nav}>
-                        <a className={styles.logo}>
-                            {!("native" in window) && (
-                                <img src={wideSVG} draggable={false} />
-                            )}
-                        </a>
-                        <LocaleSelector />
-                    </div>
-                    {/*<div className={styles.middle}>*/}
-                    <div className={styles.form}>
-                        {/*<div style={styles.version}>
+                <div className={styles.nav}>
+                    <a className={styles.logo}>
+                        <strong style={{ fontSize: '24px' }}>Match3D</strong>  // Texto en negrita y tamaño 24px
+                    </a>
+                    <LocaleSelector />
+                </div>
+
+
+                {/*<div className={styles.middle}>*/}
+                <div className={styles.form}>
+                    {/*<div style={styles.version}>
                             API: <code>{configuration?.revolt ?? "???"}</code>{" "}
                             &middot; revolt.js: <code>{LIBRARY_VERSION}</code>{" "}
                             &middot; App: <code>{APP_VERSION}</code>
                         </div>*/}
-                        <Switch>
-                            <Route path="/login/create">
-                                <FormCreate />
-                            </Route>
-                            <Route path="/login/resend">
-                                <FormResend />
-                            </Route>
-                            <Route path="/login/verify/:token">
-                                <FormVerify />
-                            </Route>
-                            <Route path="/login/reset/:token">
-                                <FormReset />
-                            </Route>
-                            <Route path="/login/reset">
-                                <FormSendReset />
-                            </Route>
-                            <Route path="/">
-                                <FormLogin />
-                            </Route>
-                        </Switch>
-                    </div>
-                    {/*<div className={styles.loginQR}></div>*/}
-                    {/*</div>*/}
-                    <div className={styles.bottom}>
-                        <div className={styles.links}>
-                            <div className={styles.bullet} />
-                            <div className={styles.revolt}>
-                            </div>
+                    <Switch>
+                        <Route path="/login/create">
+                            <FormCreate />
+                        </Route>
+                        <Route path="/login/resend">
+                            <FormResend />
+                        </Route>
+                        <Route path="/login/verify/:token">
+                            <FormVerify />
+                        </Route>
+                        <Route path="/login/reset/:token">
+                            <FormReset />
+                        </Route>
+                        <Route path="/login/reset">
+                            <FormSendReset />
+                        </Route>
+                        <Route path="/">
+                            <FormLogin />
+                        </Route>
+                    </Switch>
+                </div>
+                {/*<div className={styles.loginQR}></div>*/}
+                {/*</div>*/}
+                <div className={styles.bottom}>
+                    <div className={styles.links}>
+                        <div className={styles.bullet} />
+                        <div className={styles.revolt}>
                         </div>
                     </div>
                 </div>
             </div>
+        </div >
         </>
     );
 });
