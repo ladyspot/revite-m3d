@@ -140,7 +140,7 @@ export default observer(() => {
                                     </CategoryButton>
                                 </Link>
                             ) : (
-                                <Link to="/invite/aXyGXQc6">
+                                <Link to="/invite/BnN9xYZp">
                                     <CategoryButton
                                         action="chevron"
                                         icon={<Group size={32} />}
