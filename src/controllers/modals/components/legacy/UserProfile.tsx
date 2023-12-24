@@ -41,6 +41,7 @@ import { ModalProps } from "../../types";
 export const UserProfile = observer(
     ({
         user_id,
+        server_id,
         isPlaceholder,
         placeholderProfile,
         ...props
