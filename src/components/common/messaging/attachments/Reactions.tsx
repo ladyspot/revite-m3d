@@ -86,52 +86,52 @@ const Reaction = styled.div<{ active: boolean }>`
 `;
 
 /**
- * Render individual reaction entries
+ * Render reactions on a message
  */
-const Entry = observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
+export const Reactions = observer(({ message }: Props) => {
     const client = useClient();
-    const [usernames, setUsernames] = useState<string[]>([]);
-    const [showUsernames, setShowUsernames] = useState(false);
-    const active = user_ids?.has(client.user!._id) || false;
+    const [showPicker, setPicker] = useState(false);
 
-    const toggleUsernames = () => {
-        if (!showUsernames) {
-            // Fetch usernames when they are first needed
-            const names = [];
-            user_ids.forEach(userId => {
-                const user = client.users.fetch(userId); // Replace with Revolt's method to fetch user details
-                names.push(user.username); // Assume a 'username' field
-            });
-            setUsernames(names);
-        }
-        setShowUsernames(!showUsernames);
-    };
-
-    return (
-        <div>
-            <Reaction
-                active={active}
-                onClick={toggleUsernames}>
-                <RenderEmoji match={id} /> {user_ids?.size || 0}
-            </Reaction>
-            {showUsernames && (
-                <UserList>
-                    {usernames.map(name => <div key={name}>{name}</div>)}
-                </UserList>
-            )}
-        </div>
+    const Entry = useCallback(
+        observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
+            const client = useClient();
+            const [usernames, setUsernames] = useState<string[]>([]);
+            const active = user_ids?.has(client.user!._id) || false;
+    
+            useEffect(() => {
+                // Function to fetch usernames
+                const fetchUsernames = async () => {
+                    const names = [];
+                    if (user_ids) {
+                        for (const userId of user_ids) {
+                            try {
+                                const user = await client.users.fetch(userId); // Replace with Revolt's fetch user method
+                                names.push(user.username); // Assuming 'username' field exists
+                            } catch (error) {
+                                console.error("Error fetching user data:", error);
+                            }
+                        }
+                    }
+                    setUsernames(names);
+                };
+    
+                fetchUsernames();
+            }, [user_ids, client.users]);
+    
+            return (
+                <Reaction
+                    active={active}
+                    onClick={() => active ? message.unreact(id) : message.react(id)}>
+                    <RenderEmoji match={id} /> {user_ids?.size || 0}
+                    <div className="usernames">
+                        {usernames.join(', ')}
+                    </div>
+                </Reaction>
+            );
+        }),
+        [],
     );
-});
-
-const UserList = styled.div`
-    font-size: 0.8em;
-    color: gray;
-    display: none; // Initially hidden
-
-    div:active + & {
-        display: block;
-    }
-`;
+    
 
     /**
      * Determine two lists of 'required' and 'optional' reactions
