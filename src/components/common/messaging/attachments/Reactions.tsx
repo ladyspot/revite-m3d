@@ -125,11 +125,10 @@ export const Reactions = observer(({ message }: Props) => {
             }
         }
 
-        if (message.reactions.keys) {
-            for (const key of message.reactions.keys()) {   
-                if (!required.has(key)) {
-                    optional.add(key);
-                }
+        for (const key of message.reactions.keys()) {
+            if (!required.has(key)) {
+                optional.add(key);
+            }
         }
 
         return {
