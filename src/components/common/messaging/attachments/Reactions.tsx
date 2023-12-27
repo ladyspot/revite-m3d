@@ -86,47 +86,31 @@ const Reaction = styled.div<{ active: boolean }>`
 `;
 
 /**
- * Render individual reaction entries
+ * Render reactions on a message
  */
-const Entry = useCallback(
-    observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
-        const [usernames, setUsernames] = useState([]);
-        const active = user_ids?.has(client.user!._id) || false;
+export const Reactions = observer(({ message }: Props) => {
+    const client = useClient();
+    const [showPicker, setPicker] = useState(false);
 
-        // Fetch usernames based on user_ids
-        useEffect(() => {
-            const fetchUsernames = async () => {
-                const names = [];
-                for (const userId of user_ids) {
-                    const user = await client.users.fetch(userId); // Fetch user details
-                    names.push(user.username); // Assume a 'username' field
-                }
-                setUsernames(names);
-            };
+    /**
+     * Render individual reaction entries
+     */
+    const Entry = useCallback(
+        observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
+            const active = user_ids?.has(client.user!._id) || false;
 
-            fetchUsernames();
-        }, [user_ids]);
-
-        return (
-            <div>
+            return (
                 <Reaction
                     active={active}
-                    onClick={() => active ? message.unreact(id) : message.react(id)}>
+                    onClick={() =>
+                        active ? message.unreact(id) : message.react(id)
+                    }>
                     <RenderEmoji match={id} /> {user_ids?.size || 0}
                 </Reaction>
-                <UserList>
-                    {usernames.map(name => <div key={name}>{name}</div>)}
-                </UserList>
-            </div>
-        );
-    }),
-    [],
-);
-
-const UserList = styled.div`
-    font-size: 0.8em;
-    color: gray;
-`;
+            );
+        }),
+        [],
+    );
 
     /**
      * Determine two lists of 'required' and 'optional' reactions
