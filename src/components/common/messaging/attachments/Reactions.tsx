@@ -88,49 +88,44 @@ const Reaction = styled.div<{ active: boolean }>`
 /**
  * Render individual reaction entries
  */
-const Entry = observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
-    const client = useClient();
-    const [usernames, setUsernames] = useState<string[]>([]);
-    const [showUsernames, setShowUsernames] = useState(false);
-    const active = user_ids?.has(client.user!._id) || false;
+const Entry = useCallback(
+    observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
+        const [usernames, setUsernames] = useState([]);
+        const active = user_ids?.has(client.user!._id) || false;
 
-    const toggleUsernames = () => {
-        if (!showUsernames) {
-            // Fetch usernames when they are first needed
-            const names = [];
-            user_ids.forEach(userId => {
-                const user = client.users.fetch(userId); // Replace with Revolt's method to fetch user details
-                names.push(user.username); // Assume a 'username' field
-            });
-            setUsernames(names);
-        }
-        setShowUsernames(!showUsernames);
-    };
+        // Fetch usernames based on user_ids
+        useEffect(() => {
+            const fetchUsernames = async () => {
+                const names = [];
+                for (const userId of user_ids) {
+                    const user = await client.users.fetch(userId); // Fetch user details
+                    names.push(user.username); // Assume a 'username' field
+                }
+                setUsernames(names);
+            };
 
-    return (
-        <div>
-            <Reaction
-                active={active}
-                onClick={toggleUsernames}>
-                <RenderEmoji match={id} /> {user_ids?.size || 0}
-            </Reaction>
-            {showUsernames && (
+            fetchUsernames();
+        }, [user_ids]);
+
+        return (
+            <div>
+                <Reaction
+                    active={active}
+                    onClick={() => active ? message.unreact(id) : message.react(id)}>
+                    <RenderEmoji match={id} /> {user_ids?.size || 0}
+                </Reaction>
                 <UserList>
                     {usernames.map(name => <div key={name}>{name}</div>)}
                 </UserList>
-            )}
-        </div>
-    );
-});
+            </div>
+        );
+    }),
+    [],
+);
 
 const UserList = styled.div`
     font-size: 0.8em;
     color: gray;
-    display: none; // Initially hidden
-
-    div:active + & {
-        display: block;
-    }
 `;
 
     /**
