@@ -86,16 +86,43 @@ const Reaction = styled.div<{ active: boolean }>`
 `;
 
 /**
- * Username styling
+ * Tooltip for usernames
  */
-const Username = styled.div`
-    font-size: 0.8em;
+const UsernameTooltip = styled.div`
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px;
+    background-color: var(--tertiary-background);
     color: var(--secondary-foreground);
-    margin-bottom: 4px;  // Adjust as needed
-    text-align: center;  // Center-align usernames
+    border-radius: 4px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: var(--tertiary-background) transparent transparent transparent;
+        transform: translateX(-50%);
+    }
 `;
 
-// ... (Rest of your existing styled components)
+const ReactionContainer = styled.div`
+    position: relative;
+    display: inline-block;
+
+    &:hover ${UsernameTooltip} {
+        display: block;
+    }
+`;
 
 /**
  * Render reactions on a message
@@ -112,14 +139,14 @@ export const Reactions = observer(({ message }) => {
             const active = user_ids?.has(client.user!._id) || false;
 
             return (
-                <div>
-                    {/* Render usernames */}
-                    <div>
+                <ReactionContainer>
+                    {/* Tooltip with usernames */}
+                    <UsernameTooltip>
                         {Array.from(user_ids || []).map(userId => {
                             const user = client.users.get(userId);
-                            return <Username key={userId}>{user?.username}</Username>;
+                            return <div key={userId}>{user?.username}</div>;
                         })}
-                    </div>
+                    </UsernameTooltip>
 
                     {/* Render reaction emoji and count */}
                     <Reaction
@@ -129,7 +156,7 @@ export const Reactions = observer(({ message }) => {
                         }>
                         <RenderEmoji match={id} /> {user_ids?.size || 0}
                     </Reaction>
-                </div>
+                </ReactionContainer>
             );
         }),
         [client.user],
