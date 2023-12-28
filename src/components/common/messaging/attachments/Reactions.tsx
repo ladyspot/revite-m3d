@@ -86,6 +86,18 @@ const Reaction = styled.div<{ active: boolean }>`
 `;
 
 /**
+ * Username styling
+ */
+const Username = styled.div`
+    font-size: 0.8em;
+    color: var(--secondary-foreground);
+    margin-bottom: 4px;  // Adjust as needed
+    text-align: center;  // Center-align usernames
+`;
+
+// ... (Rest of your existing styled components)
+
+/**
  * Render reactions on a message
  */
 export const Reactions = observer(({ message }) => {
@@ -102,10 +114,12 @@ export const Reactions = observer(({ message }) => {
             return (
                 <div>
                     {/* Render usernames */}
-                    {Array.from(user_ids || []).map(userId => {
-                        const user = client.users.get(userId);
-                        return <div key={userId}>{user?.username}</div>;
-                    })}
+                    <div>
+                        {Array.from(user_ids || []).map(userId => {
+                            const user = client.users.get(userId);
+                            return <Username key={userId}>{user?.username}</Username>;
+                        })}
+                    </div>
 
                     {/* Render reaction emoji and count */}
                     <Reaction
