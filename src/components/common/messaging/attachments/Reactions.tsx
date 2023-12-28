@@ -24,6 +24,23 @@ interface Props {
 }
 
 /**
+ * Function to get the highest role color for a user
+ */
+const getHighestRoleColor = (userId, serverRoles) => {
+    const user = client.users.get(userId);
+    if (!user || !user.roles) return 'inherit'; // Default color
+
+    let highestRole = null;
+    for (const roleId of user.roles) {
+        const role = serverRoles[roleId];
+        if (role && (!highestRole || role.rank > highestRole.rank)) {
+            highestRole = role;
+        }
+    }
+    return highestRole?.color || 'inherit'; // Default color if no role color is available
+};
+
+/**
  * Reaction list element
  */
 const List = styled.div`
@@ -52,14 +69,37 @@ const Divider = styled.div`
 `;
 
 /**
- * Profile image styling
+ * Reaction styling
  */
-const ProfileImage = styled.img`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 8px;
+const Reaction = styled.div<{ active: boolean }>`
+    padding: 0.4em;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    color: var(--secondary-foreground);
+    border-radius: var(--border-radius);
+    background: var(--secondary-background);
+
+    img {
+        width: 1.2em;
+        height: 1.2em;
+        object-fit: contain;
+    }
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+
+    &:active {
+        filter: brightness(0.75);
+    }
+
+    ${(props) =>
+        props.active &&
+        css`
+            border-color: var(--accent);
+        `}
 `;
 
 /**
@@ -114,34 +154,27 @@ export const Reactions = observer(({ message }) => {
     const Entry = useCallback(
         observer(({ id, user_ids }) => {
             const active = user_ids?.has(client.user!._id) || false;
-
+            const serverRoles = channel.server?.roles; // Assuming `channel.server` contains the server details
+    
             return (
                 <ReactionContainer>
-                    {/* Tooltip with usernames and profile images */}
                     <UsernameTooltip>
                         {Array.from(user_ids || []).map(userId => {
-                            const user = client.users.get(userId);
+                            const roleColor = getHighestRoleColor(userId, serverRoles);
                             return (
-                                <div key={userId}>
-                                    <ProfileImage src={user?.profileUrl} alt={user?.username} />
-                                    {user?.username}
+                                <div key={userId} style={{ color: roleColor }}>
+                                    {client.users.get(userId)?.username}
                                 </div>
                             );
                         })}
                     </UsernameTooltip>
-
-                    {/* Render reaction emoji and count */}
-                    <Reaction
-                        active={active}
-                        onClick={() =>
-                            active ? message.unreact(id) : message.react(id)
-                        }>
+                    <Reaction active={active} onClick={() => active ? message.unreact(id) : message.react(id)}>
                         <RenderEmoji match={id} /> {user_ids?.size || 0}
                     </Reaction>
                 </ReactionContainer>
             );
         }),
-        [client.user],
+        [client.user, channel.server],
     );
 
     /**
