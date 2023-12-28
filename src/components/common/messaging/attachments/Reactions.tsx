@@ -88,7 +88,7 @@ const Reaction = styled.div<{ active: boolean }>`
 /**
  * Render reactions on a message
  */
-export const Reactions = observer(({ message }: Props) => {
+export const Reactions = observer(({ message }) => {
     const client = useClient();
     const [showPicker, setPicker] = useState(false);
 
@@ -96,20 +96,29 @@ export const Reactions = observer(({ message }: Props) => {
      * Render individual reaction entries
      */
     const Entry = useCallback(
-        observer(({ id, user_ids }: { id: string; user_ids?: Set<string> }) => {
+        observer(({ id, user_ids }) => {
             const active = user_ids?.has(client.user!._id) || false;
 
             return (
-                <Reaction
-                    active={active}
-                    onClick={() =>
-                        active ? message.unreact(id) : message.react(id)
-                    }>
-                    <RenderEmoji match={id} /> {user_ids?.size || 0}
-                </Reaction>
+                <div>
+                    {/* Render usernames */}
+                    {Array.from(user_ids || []).map(userId => {
+                        const user = client.users.get(userId);
+                        return <div key={userId}>{user?.username}</div>;
+                    })}
+
+                    {/* Render reaction emoji and count */}
+                    <Reaction
+                        active={active}
+                        onClick={() =>
+                            active ? message.unreact(id) : message.react(id)
+                        }>
+                        <RenderEmoji match={id} /> {user_ids?.size || 0}
+                    </Reaction>
+                </div>
             );
         }),
-        [],
+        [client.user],
     );
 
     /**
