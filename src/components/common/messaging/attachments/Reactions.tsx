@@ -24,6 +24,23 @@ interface Props {
 }
 
 /**
+ * Function to get the highest role color for a user
+ */
+const getHighestRoleColor = (userId, serverRoles) => {
+    const user = client.users.get(userId);
+    if (!user || !user.roles) return 'inherit'; // Default color
+
+    let highestRole = null;
+    for (const roleId of user.roles) {
+        const role = serverRoles[roleId];
+        if (role && (!highestRole || role.rank > highestRole.rank)) {
+            highestRole = role;
+        }
+    }
+    return highestRole?.color || 'inherit'; // Default color if no role color is available
+};
+
+/**
  * Reaction list element
  */
 const List = styled.div`
@@ -137,29 +154,27 @@ export const Reactions = observer(({ message }) => {
     const Entry = useCallback(
         observer(({ id, user_ids }) => {
             const active = user_ids?.has(client.user!._id) || false;
-
+            const serverRoles = channel.server?.roles; // Assuming `channel.server` contains the server details
+    
             return (
                 <ReactionContainer>
-                    {/* Tooltip with usernames */}
                     <UsernameTooltip>
                         {Array.from(user_ids || []).map(userId => {
-                            const user = client.users.get(userId);
-                            return <div key={userId}>{user?.username}</div>;
+                            const roleColor = getHighestRoleColor(userId, serverRoles);
+                            return (
+                                <div key={userId} style={{ color: roleColor }}>
+                                    {client.users.get(userId)?.username}
+                                </div>
+                            );
                         })}
                     </UsernameTooltip>
-
-                    {/* Render reaction emoji and count */}
-                    <Reaction
-                        active={active}
-                        onClick={() =>
-                            active ? message.unreact(id) : message.react(id)
-                        }>
+                    <Reaction active={active} onClick={() => active ? message.unreact(id) : message.react(id)}>
                         <RenderEmoji match={id} /> {user_ids?.size || 0}
                     </Reaction>
                 </ReactionContainer>
             );
         }),
-        [client.user],
+        [client.user, channel.server],
     );
 
     /**
