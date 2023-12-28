@@ -52,14 +52,37 @@ const Divider = styled.div`
 `;
 
 /**
- * Profile image styling
+ * Reaction styling
  */
-const ProfileImage = styled.img`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 8px;
+const Reaction = styled.div<{ active: boolean }>`
+    padding: 0.4em;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    color: var(--secondary-foreground);
+    border-radius: var(--border-radius);
+    background: var(--secondary-background);
+
+    img {
+        width: 1.2em;
+        height: 1.2em;
+        object-fit: contain;
+    }
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+
+    &:active {
+        filter: brightness(0.75);
+    }
+
+    ${(props) =>
+        props.active &&
+        css`
+            border-color: var(--accent);
+        `}
 `;
 
 /**
@@ -117,16 +140,11 @@ export const Reactions = observer(({ message }) => {
 
             return (
                 <ReactionContainer>
-                    {/* Tooltip with usernames and profile images */}
+                    {/* Tooltip with usernames */}
                     <UsernameTooltip>
                         {Array.from(user_ids || []).map(userId => {
                             const user = client.users.get(userId);
-                            return (
-                                <div key={userId}>
-                                    <ProfileImage src={user?.profileUrl} alt={user?.username} />
-                                    {user?.username}
-                                </div>
-                            );
+                            return <div key={userId}>{user?.username}</div>;
                         })}
                     </UsernameTooltip>
 
