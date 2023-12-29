@@ -3,6 +3,8 @@ node_modules
 dist
 dist_injected
 dist-ssr
+.env
+.env.build
 *.local
 *.log
 /.idea
