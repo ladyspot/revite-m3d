@@ -102,7 +102,7 @@ const Base = styled.div`
 `;
 
 // ! FIXME: Move to global config
-const MAX_REPLIES = 5;
+const MAX_REPLIES = 9;
 export default observer(({ channel, replies, setReplies }: Props) => {
     const client = channel.client;
     const layout = useApplicationState().layout;
