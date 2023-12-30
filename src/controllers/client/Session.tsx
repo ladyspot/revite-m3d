@@ -148,7 +148,7 @@ type Transition =
             case "DISCONNECT": {
                 if (navigator.onLine) {
                     this.assert("Online");
-                    this.state = "Disconnected";
+                    this.state = "Online";
 
                     // Attempt to reconnect immediately
                     this.emit({ action: "RETRY" });
