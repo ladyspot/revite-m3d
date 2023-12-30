@@ -18,17 +18,27 @@ type Transition =
           action: "SUCCESS" | "DISCONNECT" | "RETRY" | "LOGOUT" | "ONLINE" | "OFFLINE";
       };
 
-export default class Session {
-    state: State = window.navigator.onLine ? "Ready" : "Offline";
-    user_id: string | null = null;
-    client: Client | null = null;
 
-    constructor() {
-        makeAutoObservable(this);
-        window.addEventListener("online", this.onOnline.bind(this));
-        window.addEventListener("offline", this.onOffline.bind(this));
-    }
-
+      export default class Session {
+        state: State = window.navigator.onLine ? "Ready" : "Offline";
+        user_id: string | null = null;
+        client: Client | null = null;
+    
+        constructor() {
+            makeAutoObservable(this);
+            window.addEventListener("online", this.onOnline.bind(this));
+            window.addEventListener("offline", this.onOffline.bind(this));
+    
+            // Start checking the connection status periodically
+            setInterval(() => this.checkConnection(), 30000); // Every 30 seconds
+        }
+    
+        // Method to check the connection and reconnect if necessary
+        @action checkConnection() {
+            if (this.state === "Disconnected" && navigator.onLine) {
+                this.emit({ action: "RETRY" });
+            }
+        }
     @action destroy() {
         if (this.client) {
             this.client.logout(false);
@@ -103,6 +113,8 @@ export default class Session {
                 this.state = "Connecting";
                 this.createClient(data.apiUrl);
 
+            
+
                 if (data.configuration) {
                     this.client!.configuration = data.configuration;
                 }
@@ -138,11 +150,8 @@ export default class Session {
                     this.assert("Online");
                     this.state = "Disconnected";
 
-                    setTimeout(() => {
-                        if (this.state === "Disconnected") {
-                            this.emit({ action: "RETRY" });
-                        }
-                    }, 1000);
+                    // Attempt to reconnect immediately
+                    this.emit({ action: "RETRY" });
                 }
                 break;
             }
