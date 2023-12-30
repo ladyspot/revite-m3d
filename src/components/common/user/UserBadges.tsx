@@ -201,22 +201,20 @@ export const UserProfile = observer(
                                 </span>
                             </div>
                             {user._id === "01HHVGSJ190P0NERR9EP49EFK5" && (
-                         <>
-                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                     <Tooltip content={<Text id="app.special.popovers.user_profile.badges.founder" />}>
-                     <img src="https://panel.match3d.space/badges/founder.png" />
-                     </Tooltip>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <Tooltip content={<Text id="app.special.popovers.user_profile.badges.founder" />}>
+            <img src="https://panel.match3d.space/badges/founder.png" />
+        </Tooltip>
 
-                     <Tooltip content={<Text id="app.special.popovers.user_profile.badges.moderation" />}>
-                     <img src="https://panel.match3d.space/badges/moderator.png" />
-                     </Tooltip>
+        <Tooltip content={<Text id="app.special.popovers.user_profile.badges.moderation" />}>
+            <img src="https://panel.match3d.space/badges/moderator.png" />
+        </Tooltip>
 
-                     <Tooltip content={<Text id="app.navigation.tabs.dev" />}>
-                     <img src="https://panel.match3d.space/badges/developer.png" />
-                     </Tooltip>
-                      </div>
-                         </>                    
-                            )}
+        <Tooltip content={<Text id="app.navigation.tabs.dev" />}>
+            <img src="https://panel.match3d.space/badges/developer.png" />
+        </Tooltip>
+    </div>
+)}
                             {user.status?.text && (
                                 <span className={styles.status}>
                                     <UserStatus user={user} tooltip />
