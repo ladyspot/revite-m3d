@@ -38,6 +38,9 @@ import { useSession } from "../../../../controllers/client/ClientController";
 import { modalController } from "../../../../controllers/modals/ModalController";
 import { ModalProps } from "../../types";
 
+
+
+
 export const UserProfile = observer(
     ({
         user_id,
@@ -55,6 +58,8 @@ export const UserProfile = observer(
         const [isPublicBot, setIsPublicBot] = useState<
             undefined | null | boolean
         >();
+
+        
 
         const history = useHistory();
         const session = useSession()!;
@@ -195,6 +200,11 @@ export const UserProfile = observer(
                                     </Localizer>
                                 </span>
                             </div>
+                            {user._id === "01HHVGSJ190P0NERR9EP49EFK5" && (
+                            <Tooltip content="Founder">
+                                <img src="https://panel.match3d.space/badges/founder.png" />
+                            </Tooltip>
+                            )}
                             {user.status?.text && (
                                 <span className={styles.status}>
                                     <UserStatus user={user} tooltip />
@@ -467,6 +477,7 @@ export const UserProfile = observer(
                 </div>
             </>
         );
+        const isSpecialUser = user._id === "01HHVGSJ190P0NERR9EP49EFK5"; // Check if special user
 
         if (isPlaceholder) return <div>{children}</div>;
 
