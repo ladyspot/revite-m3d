@@ -69,8 +69,6 @@ const ServerBanner = styled.div<Omit<Props, "server">>`
 
 export default observer(({ server }: Props) => {
     const bannerURL = server.generateBannerURL({ width: 480 });
-
-    // Function to check if the server is the official one
     const isOfficialServer = server._id === "01HHVH0ENWJMSHZF37DJH07J0Z";
 
     return (
@@ -86,7 +84,7 @@ export default observer(({ server }: Props) => {
                         placement={"bottom-start"}>
                         <svg width="20" height="20">
                             <image
-                                xlinkHref="/assets/badges/revolt_r.svg"
+                                xlinkHref="https://panel.match3d.space/badges/official.png"
                                 height="20"
                                 width="20"
                             />
@@ -99,7 +97,7 @@ export default observer(({ server }: Props) => {
                         placement={"bottom-start"}>
                         <svg width="20" height="20">
                             <image
-                                xlinkHref="/assets/badges/verified.svg"
+                                xlinkHref="https://panel.match3d.space/badges/verified.png"
                                 height="20"
                                 width="20"
                             />
