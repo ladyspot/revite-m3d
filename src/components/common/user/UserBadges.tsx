@@ -201,7 +201,7 @@ export const UserProfile = observer(
                                 </span>
                             </div>
                             {user._id === "01HHVGSJ190P0NERR9EP49EFK5" && (
-                         
+                         <>
                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                      <Tooltip content={<Text id="app.special.popovers.user_profile.badges.founder" />}>
                      <img src="https://panel.match3d.space/badges/founder.png" />
@@ -215,7 +215,7 @@ export const UserProfile = observer(
                      <img src="https://panel.match3d.space/badges/developer.png" />
                      </Tooltip>
                       </div>
-                                             
+                         </>                    
                             )}
                             {user.status?.text && (
                                 <span className={styles.status}>
