@@ -70,52 +70,33 @@ const ServerBanner = styled.div<Omit<Props, "server">>`
 export default observer(({ server }: Props) => {
     const bannerURL = server.generateBannerURL({ width: 480 });
     const isOfficialServer = server._id === "01HHVH0ENWJMSHZF37DJH07J0Z";
+    const isVerifiedServer = server.flags && (server.flags & 1); // Adjust this based on how your flags are set up
 
     return (
         <ServerBanner
             background={typeof bannerURL !== "undefined"}
-            style={{
-                backgroundImage: bannerURL ? `url('${bannerURL}')` : undefined,
-            }}>
+            style={{ backgroundImage: bannerURL ? `url('${bannerURL}')` : undefined }}>
             <div className="container">
                 {isOfficialServer && (
-                    <Tooltip
-                        content={<Text id="app.special.server-badges.official" />}
-                        placement={"bottom-start"}>
+                    <Tooltip content={<Text id="app.special.server-badges.official" />} placement={"bottom-start"}>
                         <svg width="20" height="20">
-                            <image
-                                xlinkHref="https://panel.match3d.space/badges/official.png"
-                                height="20"
-                                width="20"
-                            />
+                            <image xlinkHref="https://panel.match3d.space/badges/official.png" height="20" width="20" />
                         </svg>
                     </Tooltip>
                 )}
-                {server.flags && server.flags & 1 ? (
-                    <Tooltip
-                        content={<Text id="app.special.server-badges.verified" />}
-                        placement={"bottom-start"}>
+                {isOfficialServer && (
+                    <Tooltip content={<Text id="app.special.server-badges.verified" />} placement={"bottom-start"}>
                         <svg width="20" height="20">
-                            <image
-                                xlinkHref="https://panel.match3d.space/badges/verified.png"
-                                height="20"
-                                width="20"
-                            />
+                            <image xlinkHref="https://panel.match3d.space/badges/verified.png" height="20" width="20" />
                         </svg>
                     </Tooltip>
-                ) : undefined}
-                <a
-                    className="title"
-                    onClick={() =>
-                        modalController.push({ type: "server_info", server })
-                    }>
+                )}
+                <a className="title" onClick={() => modalController.push({ type: "server_info", server })}>
                     {server.name}
                 </a>
                 {server.havePermission("ManageServer") && (
                     <Link to={`/server/${server._id}/settings`}>
-                        <IconButton>
-                            <Cog size={20} />
-                        </IconButton>
+                        <IconButton><Cog size={20} /></IconButton>
                     </Link>
                 )}
             </div>
