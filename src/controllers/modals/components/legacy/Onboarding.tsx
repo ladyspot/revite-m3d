@@ -35,7 +35,7 @@ export function OnboardingModal({
         callback(username, true)
             .then(() => {
                 // Join the Match3D server after successful registration
-                return client.joinInvite("/invite/TdtQBdC7"); 
+                return client.joinInvite("TdtQBdC7"); 
             })
             .then(() => {
                 props.onClose(); // Close the modal
