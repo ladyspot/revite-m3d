@@ -36,8 +36,6 @@ interface Props {
 }
 
 export default function UserBadges({ badges, uid }: Props) {
-    const isSpecialUser = uid === "01HHVGSJ190P0NERR9EP49EFK5";
-
     return (
         <BadgesBase>
             <Localizer>
@@ -48,12 +46,16 @@ export default function UserBadges({ badges, uid }: Props) {
                         }>
                         <img src="/assets/badges/founder.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.Developer ? (
                     <Tooltip content={<Text id="app.navigation.tabs.dev" />}>
                         <img src="/assets/badges/developer.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.Translator ? (
                     <Tooltip
                         content={
@@ -72,7 +74,9 @@ export default function UserBadges({ badges, uid }: Props) {
                             }}
                         />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.EarlyAdopter ? (
                     <Tooltip
                         content={
@@ -80,7 +84,9 @@ export default function UserBadges({ badges, uid }: Props) {
                         }>
                         <img src="/assets/badges/early_adopter.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.PlatformModeration ? (
                     <Tooltip
                         content={
@@ -88,7 +94,9 @@ export default function UserBadges({ badges, uid }: Props) {
                         }>
                         <img src="/assets/badges/moderation.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.ResponsibleDisclosure ? (
                     <Tooltip
                         content={
@@ -96,8 +104,10 @@ export default function UserBadges({ badges, uid }: Props) {
                         }>
                         <Shield size={24} color="gray" />
                     </Tooltip>
-                ) : null}
-                {badges & Badges.Supporter ? (
+                ) : (
+                    <></>
+                )}
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.supporter" />
@@ -115,27 +125,37 @@ export default function UserBadges({ badges, uid }: Props) {
                             }}
                         />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.ReservedRelevantJokeBadge1 ? (
                     <Tooltip content="sus">
                         <img src="/assets/badges/amog.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.ReservedRelevantJokeBadge2 ? (
                     <Tooltip content="It's Morbin Time">
                         <img src="/assets/badges/amorbus.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
                 {badges & Badges.Paw ? (
                     <Tooltip content="🦊">
                         <img src="/assets/badges/paw.svg" />
                     </Tooltip>
-                ) : null}
-                {isSpecialUser ? (
-                    <Tooltip content="Special Founder">
+                ) : (
+                    <></>
+                )}
+                {uid === "01HHSRJNB6JW0E0HYESGWDSAFW" ? (
+                    <Tooltip content="Match3D Founder">
                         <img src="/assets/badges/founder.svg" />
                     </Tooltip>
-                ) : null}
+                ) : (
+                    <></>
+                )}
             </Localizer>
         </BadgesBase>
     );
