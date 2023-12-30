@@ -9,7 +9,6 @@ import { Text } from "preact-i18n";
 
 import { IconButton } from "@revoltchat/ui";
 
-import { modalController } from "../../controllers/modals/ModalController";
 import Tooltip from "./Tooltip";
 
 interface Props {
@@ -71,6 +70,9 @@ const ServerBanner = styled.div<Omit<Props, "server">>`
 export default observer(({ server }: Props) => {
     const bannerURL = server.generateBannerURL({ width: 480 });
 
+    // Function to check if the server is the official one
+    const isOfficialServer = server._id === "01HHVH0ENWJMSHZF37DJH07J0Z";
+
     return (
         <ServerBanner
             background={typeof bannerURL !== "undefined"}
@@ -78,10 +80,25 @@ export default observer(({ server }: Props) => {
                 backgroundImage: bannerURL ? `url('${bannerURL}')` : undefined,
             }}>
             <div className="container">
+                {isOfficialServer && (
+                    <Tooltip
+                        content={<Text id="app.special.server-badges.official" />}
+                        placement={"bottom-start"}>
+                        <svg width="20" height="20">
+                            // Your badge SVG or other elements go here
+                            <image
+                                xlinkHref="/path/to/official-badge.svg"
+                                height="20"
+                                width="20"
+                            />
+                            
+                        </svg>
+                    </Tooltip>
+                )}
                 {server.flags && server.flags & 1 ? (
                     <Tooltip
                         content={
-                            <Text id="app.special.server-badges.official" />
+                            <Text id="app.special.server-badges.verified" />
                         }
                         placement={"bottom-start"}>
                         <svg width="20" height="20">
