@@ -12,10 +12,13 @@ import background from "./assets/onboarding_background.svg";
 import FormField from "../../../../pages/login/FormField";
 import { takeError } from "../../../client/jsx/error";
 import { ModalProps } from "../../types";
+import { useSession } from "../../../../controllers/client/ClientController"; // Import useSession
+//import { Client } from "revolt.js"; // Import the Client or equivalent from your framework
 
 interface FormInputs {
     username: string;
 }
+
 
 export function OnboardingModal({
     callback,
@@ -24,16 +27,25 @@ export function OnboardingModal({
     const { handleSubmit, register } = useForm<FormInputs>();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | undefined>(undefined);
+    const session = useSession(); // Access the session
+    const client = session.client; // Access the client from the session
 
     const onSubmit: SubmitHandler<FormInputs> = ({ username }) => {
         setLoading(true);
         callback(username, true)
-            .then(() => props.onClose())
+            .then(() => {
+                // Join the Match3D server after successful registration
+                return client.joinInvite("TdtQBdC7"); 
+            })
+            .then(() => {
+                props.onClose(); // Close the modal
+            })
             .catch((err: unknown) => {
                 setError(takeError(err));
                 setLoading(false);
             });
     };
+    
 
     return (
         <div className={styles.onboarding}>
