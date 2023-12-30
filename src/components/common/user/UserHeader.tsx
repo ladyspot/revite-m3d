@@ -14,6 +14,7 @@ import { isTouchscreenDevice } from "../../../lib/isTouchscreenDevice";
 import { modalController } from "../../../controllers/modals/ModalController";
 import Tooltip from "../Tooltip";
 import UserStatus from "./UserStatus";
+import UserBadges from "./UserBadges"; // Import the UserBadges component
 
 const HeaderBase = styled.div`
     gap: 0;
@@ -76,6 +77,7 @@ export default observer(({ user }: Props) => {
                     onClick={() => openContextMenu("Status")}>
                     <UserStatus user={user} />
                 </span>
+                <UserBadges badges={user.badges} uid={user._id} /> {/* Render the UserBadges */}
             </HeaderBase>
             {!isTouchscreenDevice && (
                 <div className="actions">
