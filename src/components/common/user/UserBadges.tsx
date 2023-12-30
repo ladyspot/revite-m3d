@@ -207,11 +207,11 @@ export const UserProfile = observer(
                           </Tooltip>
 
                           <Tooltip content={<Text id="app.special.popovers.user_profile.badges.moderation" />}>
-                          <img src="/assets/badges/moderation.svg" />
+                          <img src="https://panel.match3d.space/badges/moderator.png" />
                           </Tooltip>
 
                           <Tooltip content={<Text id="app.navigation.tabs.dev" />}>
-                          <img src="/assets/badges/developer.svg" />
+                          <img src="https://panel.match3d.space/badges/developer.png" />
                           </Tooltip>
                          </>                    
                             )}
