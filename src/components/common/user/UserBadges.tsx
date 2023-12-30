@@ -39,7 +39,7 @@ export default function UserBadges({ badges, uid }: Props) {
     return (
         <BadgesBase>
             <Localizer>
-                {badges & Badges.Founder ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.founder" />
@@ -49,14 +49,14 @@ export default function UserBadges({ badges, uid }: Props) {
                 ) : (
                     <></>
                 )}
-                {badges & Badges.Developer ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip content={<Text id="app.navigation.tabs.dev" />}>
                         <img src="/assets/badges/developer.svg" />
                     </Tooltip>
                 ) : (
                     <></>
                 )}
-                {badges & Badges.Translator ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.translator" />
@@ -77,7 +77,7 @@ export default function UserBadges({ badges, uid }: Props) {
                 ) : (
                     <></>
                 )}
-                {badges & Badges.EarlyAdopter ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.early_adopter" />
@@ -87,7 +87,7 @@ export default function UserBadges({ badges, uid }: Props) {
                 ) : (
                     <></>
                 )}
-                {badges & Badges.PlatformModeration ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.moderation" />
@@ -97,7 +97,7 @@ export default function UserBadges({ badges, uid }: Props) {
                 ) : (
                     <></>
                 )}
-                {badges & Badges.ResponsibleDisclosure ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip
                         content={
                             <Text id="app.special.popovers.user_profile.badges.responsible_disclosure" />
@@ -119,7 +119,7 @@ export default function UserBadges({ badges, uid }: Props) {
                             }}
                             onClick={() => {
                                 window.open(
-                                    "https://patreon.com/sincrogame",
+                                    "https://insrt.uk/donate",
                                     "_blank",
                                 );
                             }}
@@ -128,30 +128,30 @@ export default function UserBadges({ badges, uid }: Props) {
                 ) : (
                     <></>
                 )}
-                {badges & Badges.ReservedRelevantJokeBadge1 ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip content="sus">
                         <img src="/assets/badges/amog.svg" />
                     </Tooltip>
                 ) : (
                     <></>
                 )}
-                {badges & Badges.ReservedRelevantJokeBadge2 ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip content="It's Morbin Time">
                         <img src="/assets/badges/amorbus.svg" />
                     </Tooltip>
                 ) : (
                     <></>
                 )}
-                {badges & Badges.Paw ? (
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
                     <Tooltip content="🦊">
                         <img src="/assets/badges/paw.svg" />
                     </Tooltip>
                 ) : (
                     <></>
                 )}
-                {uid === "01HHSRJNB6JW0E0HYESGWDSAFW" ? (
-                    <Tooltip content="Match3D Founder">
-                        <img src="/assets/badges/founder.svg" />
+                {uid === "01HHVGSJ190P0NERR9EP49EFK5" ? (
+                    <Tooltip content="🦝">
+                        <img src="/assets/badges/raccoon.svg" />
                     </Tooltip>
                 ) : (
                     <></>

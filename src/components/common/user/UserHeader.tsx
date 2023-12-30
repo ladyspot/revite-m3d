@@ -38,9 +38,6 @@ const HeaderBase = styled.div`
         cursor: pointer;
         font-size: 13px;
         font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 8px;
     }
 
     .status {
@@ -55,8 +52,6 @@ interface Props {
 }
 
 export default observer(({ user }: Props) => {
-    const isSpecialUser = user._id === "01HHVGSJ190P0NERR9EP49EFK5"; // Check for special user ID
-
     return (
         <Header topBorder palette="secondary">
             <HeaderBase>
@@ -64,8 +59,9 @@ export default observer(({ user }: Props) => {
                     {user.display_name ?? user.username}
                 </div>
                 <Localizer>
-                    <div className="username">
+                    <Tooltip content={<Text id="app.special.copy_username" />}>
                         <span
+                            className="username"
                             onClick={() =>
                                 modalController.writeText(user.username)
                             }>
@@ -73,14 +69,7 @@ export default observer(({ user }: Props) => {
                             {"#"}
                             {user.discriminator}
                         </span>
-                        {isSpecialUser && (
-                            <Tooltip content="Founder">
-                                <img 
-                                    src="https://panel.match3d.space/badges/founder.png" 
-                                />
-                            </Tooltip>
-                        )}
-                    </div>
+                    </Tooltip>
                 </Localizer>
                 <span
                     className="status"
