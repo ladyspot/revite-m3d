@@ -14,7 +14,6 @@ import { isTouchscreenDevice } from "../../../lib/isTouchscreenDevice";
 import { modalController } from "../../../controllers/modals/ModalController";
 import Tooltip from "../Tooltip";
 import UserStatus from "./UserStatus";
-import UserBadges from "./UserBadges"; // Import the UserBadges component
 
 const HeaderBase = styled.div`
     gap: 0;
@@ -39,6 +38,9 @@ const HeaderBase = styled.div`
         cursor: pointer;
         font-size: 13px;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .status {
@@ -53,6 +55,8 @@ interface Props {
 }
 
 export default observer(({ user }: Props) => {
+    const isSpecialUser = user._id === "01HHVGSJ190P0NERR9EP49EFK5"; // Check for special user ID
+
     return (
         <Header topBorder palette="secondary">
             <HeaderBase>
@@ -60,9 +64,8 @@ export default observer(({ user }: Props) => {
                     {user.display_name ?? user.username}
                 </div>
                 <Localizer>
-                    <Tooltip content={<Text id="app.special.copy_username" />}>
+                    <div className="username">
                         <span
-                            className="username"
                             onClick={() =>
                                 modalController.writeText(user.username)
                             }>
@@ -70,14 +73,20 @@ export default observer(({ user }: Props) => {
                             {"#"}
                             {user.discriminator}
                         </span>
-                    </Tooltip>
+                        {isSpecialUser && (
+                            <Tooltip content="Founder">
+                                <img 
+                                    src="https://panel.match3d.space/badges/founder.png" 
+                                />
+                            </Tooltip>
+                        )}
+                    </div>
                 </Localizer>
                 <span
                     className="status"
                     onClick={() => openContextMenu("Status")}>
                     <UserStatus user={user} />
                 </span>
-                <UserBadges badges={user.badges} uid={user._id} /> {/* Render the UserBadges */}
             </HeaderBase>
             {!isTouchscreenDevice && (
                 <div className="actions">
