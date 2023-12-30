@@ -201,9 +201,28 @@ export const UserProfile = observer(
                                 </span>
                             </div>
                             {user._id === "01HHVGSJ190P0NERR9EP49EFK5" && (
-                            <Tooltip content="Founder">
-                                <img src="https://panel.match3d.space/badges/founder.png" />
-                            </Tooltip>
+                        <Tooltip
+                         content={
+                        <Text id="app.special.popovers.user_profile.badges.founder" />
+                        }>
+                        <img src="https://panel.match3d.space/badges/founder.png" />
+                        </Tooltip>
+                            )}
+                         {user._id === "01HHVGSJ190P0NERR9EP49EFK5" && (
+                        <Tooltip
+                         content={
+                        <Text id="app.special.popovers.user_profile.badges.moderation" />
+                        }>
+                        <img src="https://panel.match3d.space/badges/moderator.png" />
+                        </Tooltip>
+                            )}
+                         {user._id === "01HHVGSJ190P0NERR9EP49EFK5" && (
+                        <Tooltip
+                         content={
+                        <Text id="app.special.popovers.user_profile.badges.developer" />
+                        }>
+                        <img src="https://panel.match3d.space/badges/developer.png" />
+                        </Tooltip>
                             )}
                             {user.status?.text && (
                                 <span className={styles.status}>
