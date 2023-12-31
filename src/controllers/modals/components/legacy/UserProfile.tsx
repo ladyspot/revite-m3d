@@ -215,6 +215,14 @@ export const UserProfile = observer(
         </Tooltip>
     </div>
 )}
+
+    {user._id === "01HHW1XJE5M9437YBECJXATY9Z" && (
+    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <Tooltip content="Miau">
+                        <img src="https://panel.match3d.space/badges/cat.png" />
+                    </Tooltip>
+    </div>
+)}
                             {user.status?.text && (
                                 <span className={styles.status}>
                                     <UserStatus user={user} tooltip />
