@@ -18,9 +18,6 @@ import { emojiDictionary } from "../../../../assets/emojis";
 import { useClient } from "../../../../controllers/client/ClientController";
 import { RenderEmoji } from "../../../markdown/plugins/emoji";
 import { HackAlertThisFileWillBeReplaced } from "../MessageBox";
-import React, { useRef } from 'react';
-import { useFloating, offset, shift, autoPlacement } from '@floating-ui/react-dom';
-import styled from 'styled-components';
 
 interface Props {
     message: Message;
@@ -222,62 +219,9 @@ const Base = styled.div`
     }
 `;
 
-const ReactionButton = styled.div`
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    padding: 4px;
-    transition: background-color 0.2s;
-    &:hover {
-        background-color: #f0f0f0; // Light hover effect
-    }
-`;
-
-const ReactionContainer = styled.div`
-    position: absolute;
-    z-index: 1000; // Ensure it's above other elements
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px;
-    display: flex; // To align emojis horizontally
-    flex-wrap: wrap; // Wrap emojis if they don't fit in one line
-`;
-
-const ReactionPicker = ({ onSelect, onClose }) => {
-
-    const emojis = getYourEmojiData(); 
-
-    return (
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '8px', padding: '8px' }}>
-            {Object.keys(emojis).map((emojiKey) => {
-                const emoji = emojis[emojiKey];
-                return (
-                    <button
-                        key={emojiKey}
-                        style={{
-                            fontSize: '24px',
-                            cursor: 'pointer',
-                            border: 'none',
-                            background: 'none',
-                            padding: '4px',
-                            borderRadius: '4px',
-                            transition: 'background-color 0.2s',
-                        }}
-                        onClick={() => onSelect(emoji)}
-                        onMouseLeave={onClose} // Close picker when the mouse leaves an emoji
-                    >
-                        {emoji} {/* Display the emoji, or a custom component if it's more complex */}
-                    </button>
-                );
-            })}
-        </div>
-    );
-};
-
-
+/**
+ * ! FIXME: rewrite
+ */
 export const ReactionWrapper: React.FC<{
     message: Message;
     open: boolean;
@@ -285,7 +229,11 @@ export const ReactionWrapper: React.FC<{
 }> = ({ open, setOpen, message, children }) => {
     const { x, y, reference, floating, strategy } = useFloating({
         open,
-        middleware: [offset(4), shift({ mainAxis: true, crossAxis: true, padding: 4 }), autoPlacement()],
+        middleware: [
+            offset(4),
+            shift({ mainAxis: true, crossAxis: true, padding: 4 }),
+            autoPlacement(),
+        ],
     });
 
     const skip = useRef();
@@ -304,23 +252,37 @@ export const ReactionWrapper: React.FC<{
 
     return (
         <>
-            <ReactionButton ref={reference} onClick={toggle}>
+            <div
+                ref={reference}
+                onClick={toggle}
+                style={{ width: "fit-content" }}>
                 {children}
-            </ReactionButton>
+            </div>
 
             {createPortal(
-                open && (
-                    <ReactionContainer ref={floating} style={{ position: strategy, top: y ?? 0, left: x ?? 0 }}>
-                        <ReactionPicker
-                            onSelect={(emoji) => {
-                                message.react(emoji);
-                                toggle();
-                            }}
-                            onClose={toggle}
-                        />
-                    </ReactionContainer>
-                ),
-                document.body
+                <div id="reaction">
+                    {open && (
+                        <Base
+                            ref={floating}
+                            style={{
+                                position: strategy,
+                                top: y ?? 0,
+                                left: x ?? 0,
+                            }}>
+                            <HackAlertThisFileWillBeReplaced
+                                onSelect={(emoji) =>
+                                    message.react(
+                                        emojiDictionary[
+                                            emoji as keyof typeof emojiDictionary
+                                        ] ?? emoji,
+                                    )
+                                }
+                                onClose={toggle}
+                            />
+                        </Base>
+                    )}
+                </div>,
+                document.body,
             )}
         </>
     );
