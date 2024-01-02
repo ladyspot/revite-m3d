@@ -20,6 +20,7 @@ import { RenderEmoji } from "../../../markdown/plugins/emoji";
 import { HackAlertThisFileWillBeReplaced } from "../MessageBox";
 import React, { useRef } from 'react';
 import { useFloating, offset, shift, autoPlacement } from '@floating-ui/react-dom';
+import styled from 'styled-components';
 
 interface Props {
     message: Message;
