@@ -10,6 +10,7 @@ import { MessageAreaWidthContext } from "../../../../pages/channels/messaging/Me
 import Markdown from "../../../markdown/Markdown";
 import Attachment from "../attachments/Attachment";
 import EmbedMedia from "./EmbedMedia";
+import EmbedSpoiler from "./EmbedSpoiler";
 
 interface Props {
     embed: API.Embed;
@@ -67,8 +68,7 @@ export default function Embed({ embed }: Props) {
                         break;
                     }
                     case "Twitch":
-                    case "Lightspeed":
-                    case "Streamable": {
+                    case "Lightspeed": {
                         mw = 1280;
                         mh = 720;
                         break;
@@ -105,7 +105,7 @@ export default function Embed({ embed }: Props) {
 
             return (
                 <div
-                    className={classNames(styles.embed, styles.website)}
+                    className={classNames(styles.embed, styles.website, embed.spoiler ? styles.spoiler : null)}
                     style={{
                         borderInlineStartColor:
                             embed.colour ?? "var(--tertiary-background)",
@@ -142,11 +142,7 @@ export default function Embed({ embed }: Props) {
                                 <a
                                     onMouseDown={(ev) =>
                                         (ev.button === 0 || ev.button === 1) &&
-                                        modalController.openLink(
-                                            embed.url!,
-                                            undefined,
-                                            true,
-                                        )
+                                        modalController.openLink(embed.url!)
                                     }
                                     className={styles.title}>
                                     {embed.title}
@@ -167,6 +163,10 @@ export default function Embed({ embed }: Props) {
                                 <Attachment attachment={embed.media!} />
                             ) : (
                                 <EmbedMedia embed={embed} height={height} />
+                                
+                            ))}
+                            {(embed.spoiler && (
+                                    <EmbedSpoiler/>
                             ))}
                     </div>
                     {!largeMedia && embed.type === "Website" && (
@@ -180,8 +180,12 @@ export default function Embed({ embed }: Props) {
                                 }
                                 height={height}
                             />
+                            {embed.spoiler && (
+                            <EmbedSpoiler/>
+                        )}
                         </div>
                     )}
+                    
                 </div>
             );
         }
@@ -198,8 +202,7 @@ export default function Embed({ embed }: Props) {
                         modalController.push({ type: "image_viewer", embed })
                     }
                     onMouseDown={(ev) =>
-                        ev.button === 1 &&
-                        modalController.openLink(embed.url, undefined, true)
+                        ev.button === 1 && modalController.openLink(embed.url)
                     }
                 />
             );
