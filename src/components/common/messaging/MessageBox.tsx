@@ -361,7 +361,7 @@ export default observer(({ channel }: Props) => {
                         msg.delete().catch(console.error);
                     } else {
                         msg.edit({
-                            content: newContent.substr(0, 2000),
+                            content: newContent.substr(0, 8000),
                         })
                             .then(() =>
                                 defer(() =>
