@@ -60,7 +60,7 @@ type Transition =
     }
 
     private onDropped() {
-        this.emit({ action: "ONLINE" });
+        this.emit({ action: "DISCONNECT" });
     }
 
     private onReady() {
@@ -172,11 +172,10 @@ type Transition =
                 break;
             }
             case "ONLINE": {
-                this.assert("Online");
+                this.assert("Offline");
                 this.state = "Ready";
                 if (this.user_id) {
-                    this.emit({ action: "ONLINE" });
-                    this.state = "Online";
+                    this.emit({ action: "RETRY" });
                 }
                 break;
             }
