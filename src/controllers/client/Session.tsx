@@ -18,27 +18,17 @@ type Transition =
           action: "SUCCESS" | "DISCONNECT" | "RETRY" | "LOGOUT" | "ONLINE" | "OFFLINE";
       };
 
+export default class Session {
+    state: State = window.navigator.onLine ? "Ready" : "Offline";
+    user_id: string | null = null;
+    client: Client | null = null;
 
-      export default class Session {
-        state: State = window.navigator.onLine ? "Ready" : "Offline";
-        user_id: string | null = null;
-        client: Client | null = null;
-    
-        constructor() {
-            makeAutoObservable(this);
-            window.addEventListener("online", this.onOnline.bind(this));
-            window.addEventListener("offline", this.onOffline.bind(this));
-    
-            // Start checking the connection status periodically
-            setInterval(() => this.checkConnection(), 30000); // Every 30 seconds
-        }
-    
-        // Method to check the connection and reconnect if necessary
-        @action checkConnection() {
-            if (this.state === "Disconnected" && navigator.onLine) {
-                this.emit({ action: "RETRY" });
-            }
-        }
+    constructor() {
+        makeAutoObservable(this);
+        window.addEventListener("online", this.onOnline.bind(this));
+        window.addEventListener("offline", this.onOffline.bind(this));
+    }
+
     @action destroy() {
         if (this.client) {
             this.client.logout(false);
@@ -113,8 +103,6 @@ type Transition =
                 this.state = "Connecting";
                 this.createClient(data.apiUrl);
 
-            
-
                 if (data.configuration) {
                     this.client!.configuration = data.configuration;
                 }
@@ -150,8 +138,11 @@ type Transition =
                     this.assert("Online");
                     this.state = "Disconnected";
 
-                    // Attempt to reconnect immediately
-                    this.emit({ action: "RETRY" });
+                    setTimeout(() => {
+                        if (this.state === "Disconnected") {
+                            this.emit({ action: "RETRY" });
+                        }
+                    }, 1000);
                 }
                 break;
             }
